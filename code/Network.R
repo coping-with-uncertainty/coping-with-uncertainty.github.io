@@ -72,12 +72,6 @@ latex_table
 # LSM fit
 fit <- ergmm(UKfaculty_net ~ euclidean(d = 2))
 
-latex_table <- texreg::texreg(list(fit), caption = "Results for the UK Faculty network of the Latent Space Model.",caption.above = TRUE, stars = numeric(0),
-                              label = "tbl:lsm_results", leading.zero = FALSE,
-                              custom.coef.names = c("Edges", "Nodematch Faculty"))
-
-latex_table
-
 
 sbm_fit <- BM_bernoulli(adj = as.matrix(UKfaculty_net),explore_min=2,
                         explore_max=4,explore_min=4,
