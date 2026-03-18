@@ -6,8 +6,8 @@
 generate_pdf <- TRUE  # Set to TRUE to generate PDF files
 
 # Input data
-male <- c(408464, 397380, 399287, 404041, 402510)  # Number of male newborns
-female <- c(387014, 375752, 378792, 383467, 382374)  # Number of female newborns
+male <- c(408464, 397380, 399287, 404041, 402510)/1000  # Number of male newborns
+female <- c(387014, 375752, 378792, 383467, 382374)/1000  # Number of female newborns
 n <- male + female  # Total number of newborns
 malea <- sum(male)  # Total male newborns across all years
 femalea <- sum(female)  # Total female newborns across all years
@@ -17,7 +17,7 @@ year <- c(2021, 2020, 2019, 2018, 2017)  # Years
 # Plot 1: Male and female newborns over the years
 if (generate_pdf) pdf("plots/plot-newborns-1.pdf", height = 4, width = 4)
 plot(year, male, type = "l", ylim = c(min(female), max(male)), 
-     lwd = 2, ylab = "newborns", las = 1, bty = "l")
+     lwd = 2, ylab = "Number of Newborns (Thousands)", las = 1, bty = "l")
 lines(year, female, lwd = 2, lty = 2, las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
