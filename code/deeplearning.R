@@ -46,15 +46,15 @@ for (k in 2:K) {
 }
 
 # Flag to control PDF generation
-generate_pdf <- FALSE  # Set to TRUE to save plots
+generate_pdf <- TRUE  # Set to TRUE to save plots
 
 # Plot 1: Dimension of Theta vs Log KL divergence
-if (generate_pdf) pdf("deepl.pdf", width = 5, height = 5)
-plot(2:K, log(KL), col = "grey", xlab = "Dimension of Theta")
+if (generate_pdf) pdf("plots/deepl.pdf", width = 5, height = 5)
+plot(2:K, log(KL), col = "grey", xlab = expression(paste("Dimension ", "of ", Theta)), las = 1, bty = "l")
 xx <- 2:K
 yy <- log(KL)
 mm <- gam(yy ~ s(xx))
-lines(2:K, fitted(mm), lwd = 3)
+lines(2:K, fitted(mm), lwd = 3, las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Data Augmentation
@@ -77,9 +77,9 @@ for (k in KK) {
 }
 
 # Plot 2: KL divergence vs Model Complexity (Augmented Data)
-if (generate_pdf) pdf("deepl-aug.pdf", width = 5, height = 5)
-plot(KK, KL, type = "b", pch = 16, xlab = "Dimension of Theta", 
-     ylab = "Mean KL Divergence", col = "blue")
+if (generate_pdf) pdf("plots/deepl-aug.pdf", width = 5, height = 5)
+plot(KK, KL, type = "b", pch = 16, xlab = expression(paste("Dimension ", "of ", Theta)), 
+     ylab = "Mean KL Divergence", col = "blue", las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Final Ridge Regression Estimation

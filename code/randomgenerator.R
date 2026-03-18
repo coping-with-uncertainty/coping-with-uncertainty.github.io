@@ -3,7 +3,7 @@
 # visualizes empirical distributions, and implements bootstrapping.
 
 # Flag to control PDF generation
-generate_pdf <- FALSE  # Set to TRUE to save plots
+generate_pdf <- TRUE  # Set to TRUE to save plots
 
 # Linear Congruential Generator (LCG) parameters
 x0 <- 5
@@ -23,18 +23,18 @@ Xn <- xn / m
 Xnt <- xnt / m
 
 # Plot 1: LCG generated numbers
-if (generate_pdf) pdf("plot-rn-1.pdf", width = 6, height = 4)
-plot(Xn, ylab = expression(x[n] / m))
+if (generate_pdf) pdf("plots/plot-rn-1.pdf", width = 6, height = 4)
+plot(Xn, ylab = expression(x[n] / m), las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Plot 2: Empirical CDF of generated numbers
-if (generate_pdf) pdf("plot-rn-2.pdf", width = 6, height = 4)
-plot(ecdf(Xn), ylab = expression(F[n] ~ (x)), main = "")
+if (generate_pdf) pdf("plots/plot-rn-2.pdf", width = 6, height = 4)
+plot(ecdf(Xn), ylab = expression(F[n] ~ (x)), main = "", las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Plot 3: Scatter plot of consecutive random numbers
-if (generate_pdf) pdf("plot-rn-3.pdf", width = 6, height = 4)
-plot(Xn, Xnt, xlab = expression(x["n,1"] / m), ylab = expression(x["n,2"] / m))
+if (generate_pdf) pdf("plots/plot-rn-3.pdf", width = 6, height = 4)
+plot(Xn, Xnt, xlab = expression(x["n,1"] / m), ylab = expression(x["n,2"] / m), las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Function for importance sampling
@@ -50,8 +50,8 @@ U <- runif(N)
 est1 <- gt(U, 0)
 
 # Plot 4: First estimation function
-if (generate_pdf) pdf("plot-rn-4.pdf", width = 6, height = 4)
-plot(est1, ylab = expression(tilde(g) ~ "(" ~ "U" ~ ")"))
+if (generate_pdf) pdf("plots/plot-rn-4.pdf", width = 6, height = 4)
+plot(est1, ylab = expression(tilde(g) ~ "(" ~ "U" ~ ")"), las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Confidence interval for estimation
@@ -62,18 +62,18 @@ ci_upper <- mean(est1) + 1.96 * sqrt(var(est1) / N)
 est2 <- gt(U, 4)
 
 # Plot 5: Second estimation function
-if (generate_pdf) pdf("plot-rn-5.pdf", width = 6, height = 4)
-plot(est2, ylab = expression(tilde(g) ~ "(" ~ "U" ~ ")"))
+if (generate_pdf) pdf("plots/plot-rn-5.pdf", width = 6, height = 4)
+plot(est2, ylab = expression(tilde(g) ~ "(" ~ "U" ~ ")"), las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Plot 6: Normal CDF visualization
-if (generate_pdf) pdf("plot-rn-6.pdf", width = 6, height = 4)
+if (generate_pdf) pdf("plots/plot-rn-6.pdf", width = 6, height = 4)
 y <- seq(-3, 3, by = 0.01)
-plot(y, pnorm(y), type = "l", ylab = "F(y)", lwd = 3)
+plot(y, pnorm(y), type = "l", ylab = "F(y)", lwd = 3, las = 1, bty = "l")
 abline(v = 0, lwd = 3)
 U <- 0.78
-lines(c(0, qnorm(U)), c(U, U), col = "blue", lwd = 2)
-lines(c(qnorm(U), qnorm(U)), c(0, U), col = "blue", lwd = 2)
+lines(c(0, qnorm(U)), c(U, U), col = "blue", lwd = 2, las = 1, bty = "l")
+lines(c(qnorm(U), qnorm(U)), c(0, U), col = "blue", lwd = 2, las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Bootstrapping section
@@ -82,8 +82,8 @@ n <- 100
 y <- rnorm(n)
 
 # Plot 7: Original sample
-if (generate_pdf) pdf("plot-boot-1.pdf", width = 5, height = 3.5)
-plot(y)
+if (generate_pdf) pdf("plots/plot-boot-1.pdf", width = 5, height = 3.5)
+plot(y, las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Bootstrapping samples
@@ -92,11 +92,11 @@ y2 <- sample(y, replace = TRUE)
 y3 <- sample(y, replace = TRUE)
 
 # Plot 8: Bootstrapped samples
-if (generate_pdf) pdf("plot-boot-2.pdf", width = 5, height = 3.5)
-plot(y, col = "grey")
-points(y1, col = "darkblue", pch = 2)
-points(y2, col = "darkgreen", pch = 3)
-points(y3, col = "darkred", pch = 4)
+if (generate_pdf) pdf("plots/plot-boot-2.pdf", width = 5, height = 3.5)
+plot(y, col = "grey", las = 1, bty = "l")
+points(y1, col = "darkblue", pch = 2, las = 1, bty = "l")
+points(y2, col = "darkgreen", pch = 3, las = 1, bty = "l")
+points(y3, col = "darkred", pch = 4, las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Compute bootstrap variance
@@ -107,23 +107,23 @@ for (i in 1:B) {
 }
 
 # Plot 9: Histogram of bootstrapped variance
-if (generate_pdf) pdf("plot-boot-3.pdf", width = 5, height = 3.5)
-hist(sig, breaks = 20, freq = FALSE, main = "", xlab = expression("bootstrapped" ~ sigma^2))
+if (generate_pdf) pdf("plots/plot-boot-3.pdf", width = 5, height = 3.5)
+hist(sig, breaks = 20, freq = FALSE, main = "", xlab = expression("bootstrapped" ~ sigma^2), las = 1, bty = "l")
 abline(v = var(y), lwd = 3)
 if (generate_pdf) dev.off()
 
 # Plot 10: Bootstrap ECDF with confidence intervals
-if (generate_pdf) pdf("plot-boot-4.pdf", width = 5, height = 3.5)
+if (generate_pdf) pdf("plots/plot-boot-4.pdf", width = 5, height = 3.5)
 e <- ecdf(sig)
 plot(e, verticals = TRUE, do.points = FALSE, ylab = "bootstrap distribution",
-     xlab = expression("bootstrapped" ~ sigma^2))
+     xlab = expression("bootstrapped" ~ sigma^2), las = 1, bty = "l")
 qu <- get("x", environment(e))
 U <- 0.05
 quu <- qu[floor(U * B) + 1]
-lines(c(0, quu), c(U, U), col = "blue", lwd = 2)
-lines(c(quu, quu), c(0, U), col = "blue", lwd = 2)
+lines(c(0, quu), c(U, U), col = "blue", lwd = 2, las = 1, bty = "l")
+lines(c(quu, quu), c(0, U), col = "blue", lwd = 2, las = 1, bty = "l")
 U <- 0.95
 quo <- qu[floor(U * B) + 1]
-lines(c(0, quo), c(U, U), col = "blue", lwd = 2)
-lines(c(quo, quo), c(0, U), col = "blue", lwd = 2)
+lines(c(0, quo), c(U, U), col = "blue", lwd = 2, las = 1, bty = "l")
+lines(c(quo, quo), c(0, U), col = "blue", lwd = 2, las = 1, bty = "l")
 if (generate_pdf) dev.off()

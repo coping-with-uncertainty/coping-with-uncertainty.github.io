@@ -2,20 +2,21 @@
 # Description: This script performs a permutation test on rental prices from two datasets.
 
 # Flag to control PDF generation
-generate_pdf <- FALSE  # Set to TRUE to save plots
+generate_pdf <- TRUE  # Set to TRUE to save plots
+if (generate_pdf && !dir.exists("plots")) dir.create("plots")
 
 # Load datasets (Ensure the RData files are in the working directory)
-daten1 <- readRDS("data/Hartz4_2020.RDS")
+daten1 <- readRDS("../data/Hartz4_2020.RDS")
 y <- daten1$nm / daten1$wfl  # Rent per square meter
 
-daten2 <- readRDS("data/Hartz4_2022.RDS")
+daten2 <- readRDS("../data/Hartz4_2022.RDS")
 z <- daten2$nm / daten2$wfl
 z <- z[z < 35]  # Filter extreme values
 
 # Plot 1: Empirical distribution functions of original data
-if (generate_pdf) pdf("plot-permute-1.pdf", width = 5, height = 3.5)
+if (generate_pdf) pdf("plots/plot-permute-1.pdf", width = 5, height = 3.5)
 plot(ecdf(y), main = "", xlab = "Rent per square meter [EURO/sqm]", 
-     ylab = "Distribution function", col = "darkgreen", lwd = 3)
+     ylab = "Distribution function", col = "darkgreen", lwd = 3, las = 1, bty = "l", cex.lab = 1, cex.axis = 1, cex.main = 1)
 lines(ecdf(z), col = "darkblue", lwd = 3)
 if (generate_pdf) dev.off()
 
@@ -25,9 +26,9 @@ n <- length(y)
 m <- length(z)
 
 # Plot 2: Adjusted empirical distribution functions
-if (generate_pdf) pdf("plot-permute-2.pdf", width = 5, height = 3.5)
+if (generate_pdf) pdf("plots/plot-permute-2.pdf", width = 5, height = 3.5)
 plot(ecdf(y), main = "", xlab = "Rent per square meter [EURO/sqm]", 
-     ylab = "Distribution function", col = "darkgreen", lwd = 3)
+     ylab = "Distribution function", col = "darkgreen", lwd = 3, las = 1, bty = "l", cex.lab = 1, cex.axis = 1, cex.main = 1)
 lines(ecdf(z), col = "darkblue", lwd = 3)
 if (generate_pdf) dev.off()
 
@@ -46,8 +47,8 @@ for (i in 1:B) {
 }
 
 # Plot 3: Histogram of simulated KS statistics
-if (generate_pdf) pdf("plot-permute-3.pdf", width = 5, height = 3.5)
+if (generate_pdf) pdf("plots/plot-permute-3.pdf", width = 5, height = 3.5)
 hist(DS, breaks = 20, main = "", freq = FALSE, 
-     xlab = "Simulated D (permutation)", ylab = "Density")
+     xlab = "Simulated D (permutation)", ylab = "Density", las = 1, bty = "l", cex.lab = 1, cex.axis = 1, cex.main = 1)
 abline(v = D, lwd = 3)
 if (generate_pdf) dev.off()

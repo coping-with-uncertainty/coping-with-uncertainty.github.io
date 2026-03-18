@@ -42,11 +42,11 @@ Z <- rbinom(n, size = 1, prob = 0.3)
 Y <- Z * 0 + (1 - Z) * rpois(n, lambda = 5)
 
 # Flag to control PDF generation
-generate_pdf <- FALSE  # Set to TRUE to save plots
+generate_pdf <- TRUE  # Set to TRUE to save plots
 
 # Plot 1: Histogram of observed data
-if (generate_pdf) pdf("plot.zi.1.pdf", height = 5, width = 6)
-plot(table(Y), ylab = "count")
+if (generate_pdf) pdf("plots/plot.zi.1.pdf", height = 5, width = 6)
+plot(table(Y), ylab = "count", las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Initialize parameters
@@ -76,19 +76,19 @@ while (i < 30000 & length(ETA) < 5000) {
 }
 
 # Plot 2: Trajectory of sampled values
-if (generate_pdf) pdf("plot.zi.2.pdf", height = 5, width = 6)
+if (generate_pdf) pdf("plots/plot.zi.2.pdf", height = 5, width = 6)
 plot(logit.inv(ETA)[1:100], exp(DELTA)[1:100], type = "l",
-     ylab = expression(lambda), xlab = expression(pi))
+     ylab = expression(lambda), xlab = expression(pi), las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Plot 3: Trace plot for eta
-if (generate_pdf) pdf("plot.zi.3.pdf", height = 5, width = 6)
-plot(logit.inv(ETA), type = "l", ylab = expression(pi))
+if (generate_pdf) pdf("plots/plot.zi.3.pdf", height = 5, width = 6)
+plot(logit.inv(ETA), type = "l", ylab = expression(pi), las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Plot 4: Trace plot for delta
-if (generate_pdf) pdf("plot.zi.4.pdf", height = 5, width = 6)
-plot(exp(DELTA), type = "l", ylab = expression(lambda))
+if (generate_pdf) pdf("plots/plot.zi.4.pdf", height = 5, width = 6)
+plot(exp(DELTA), type = "l", ylab = expression(lambda), las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Remove burn-in
@@ -110,7 +110,7 @@ if (length(logit_eta) > 10 & length(exp_delta) > 10) {
   density_data <- kde2d(logit_eta, exp_delta, n = 50)
   
   # Plot 5: Joint posterior distribution
-  if (generate_pdf) pdf("plot.zi.5.pdf", height = 5, width = 6)
+  if (generate_pdf) pdf("plots/plot.zi.5.pdf", height = 5, width = 6)
   image(density_data, xlab = expression(pi), ylab = expression(lambda), 
         ylim = c(3, 9), xlim = c(0, 0.8))
   abline(v = 0.3)

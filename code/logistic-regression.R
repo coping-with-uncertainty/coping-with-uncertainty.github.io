@@ -5,7 +5,7 @@
 library(ggplot2)
 
 # Flag to control image generation
-generate_pdf <- FALSE  # Set to TRUE to save the plot
+generate_pdf <- TRUE  # Set to TRUE to save the plot
 
 # Create logistic function plot
 logistic_plot <- ggplot() + 
@@ -21,7 +21,7 @@ logistic_plot <- ggplot() +
 
 # Save plot if enabled
 if (generate_pdf) {
-  ggsave("logistic_plot.png", plot = logistic_plot, width = 8, height = 8)
+  ggsave("plots/logistic_plot.png", plot = logistic_plot, width = 8, height = 8)
 }
 
 # Display the plot

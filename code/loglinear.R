@@ -1,4 +1,4 @@
-data = read.table("Miete-22.dat")
+data = read.table("../data/Miete-22.dat")
 
 data$floor.space = "under 50"
 data$floor.space[data$wfl> 50] = "50 to 100"
@@ -23,4 +23,3 @@ mod = step(ind2, scope=list(lower=formula(ind2),upper=formula(full)),
            direction="forward", k = log(n))
 summary(mod)
 
-loglm(~)

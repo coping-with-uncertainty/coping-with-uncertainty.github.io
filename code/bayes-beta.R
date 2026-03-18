@@ -2,16 +2,16 @@
 # Description: This script visualizes different Beta distributions with varying parameters.
 
 # Flag to control PDF generation
-generate_pdf <- FALSE  # Set to TRUE to save plots
+generate_pdf <- TRUE  # Set to TRUE to save plots
 
 # Define probability sequence
 p <- seq(0, 1, by = 0.001)
 
 # Function to plot Beta distributions
 plot_beta <- function(a, b, filename, ylim, quantiles = c(0.05, 1)) {
-  if (generate_pdf) pdf(filename, height = 4, width = 5)
+  if (generate_pdf) pdf(paste0("plots/", filename), height = 4, width = 5)
   plot(p, dbeta(p, a, b), type = "l", xlab = expression(pi),
-       ylab = "density", lwd = 3, ylim = ylim)
+       ylab = "density", lwd = 3, ylim = ylim, las = 1, bty = "l")
   x0 <- seq(qbeta(quantiles[1], a, b), qbeta(quantiles[2], a, b), by = 0.001)
   polygon(x = c(x0, max(x0), min(x0)), y = c(dbeta(x0, a, b), 0, 0), 
           col = "lightblue")

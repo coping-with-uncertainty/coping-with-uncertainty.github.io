@@ -3,7 +3,7 @@
 # and visualizes its evolution.
 
 # Flag to control PDF generation
-generate_pdf <- FALSE  # Set to TRUE to save plots
+generate_pdf <- TRUE  # Set to TRUE to save plots
 
 # Define function for transformation
 ftrans <- function(x) {
@@ -30,12 +30,12 @@ X <- matrix(ftrans(exp(-1/2 * (Y1 - 0.5)^2 * 1) *
                      exp(-((Y1 - 0.5)^2) * ((Y2 - 0.5)^2) * 100)), nrow = N)
 
 # Plot 1: Initial transformed grid
-if (generate_pdf) pdf("plot-gmrf-1.pdf", height = 5, width = 5)
-image(Xt)
+if (generate_pdf) pdf("plots/plot-gmrf-1.pdf", height = 5, width = 5)
+image(Xt, las = 1)
 if (generate_pdf) dev.off()
 
 # Plot 2: Contour of transformed grid
-if (generate_pdf) pdf("plot-gmrf-2.pdf", height = 5, width = 5)
+if (generate_pdf) pdf("plots/plot-gmrf-2.pdf", height = 5, width = 5)
 contour(Xt)
 if (generate_pdf) dev.off()
 
@@ -48,9 +48,9 @@ Neig.fix <- cbind(N * kronecker(matrix(seq(1 / (2 * ns), (1 - 1 / (2 * ns)), by 
 Neig.fix <- round(Neig.fix, digits = 0)
 
 # Plot 3: Neighborhood points
-if (generate_pdf) pdf("plot-gmrf-3.pdf", height = 5, width = 5)
-image(Xt)
-points(Neig.fix[,1] / N, Neig.fix[,2] / N, pch = 16, cex = 2)
+if (generate_pdf) pdf("plots/plot-gmrf-3.pdf", height = 5, width = 5)
+image(Xt, las = 1)
+points(Neig.fix[,1] / N, Neig.fix[,2] / N, pch = 16, cex = 2, las = 1, bty = "l")
 if (generate_pdf) dev.off()
 
 # Function to filter valid neighbors
@@ -83,34 +83,34 @@ for (t in 1:T) {
   Xsim[,,t] <- X
   if (t %% 10 == 0) {
     print(t)
-    image(X, zlim = c(-0.2, 1.2))
+    image(X, zlim = c(-0.2, 1.2), las = 1)
   }
 }
 
 # Plot 4: First simulation frame
-if (generate_pdf) pdf("plot-gmrf-4.pdf", height = 5, width = 5)
-image(Xsim[,,1])
+if (generate_pdf) pdf("plots/plot-gmrf-4.pdf", height = 5, width = 5)
+image(Xsim[,,1], las = 1)
 if (generate_pdf) dev.off()
 
 # Plot 5: Last simulation frame
-if (generate_pdf) pdf("plot-gmrf-5.pdf", height = 5, width = 5)
-image(Xsim[,,T])
+if (generate_pdf) pdf("plots/plot-gmrf-5.pdf", height = 5, width = 5)
+image(Xsim[,,T], las = 1)
 if (generate_pdf) dev.off()
 
 # Plot 6: Maximum over last 100 frames
-if (generate_pdf) pdf("plot-gmrf-6.pdf", height = 5, width = 5)
+if (generate_pdf) pdf("plots/plot-gmrf-6.pdf", height = 5, width = 5)
 Xmax <- apply(Xsim[,,(T - 100):T], MARGIN = c(1,2), FUN = max)
-image(Xmax)
+image(Xmax, las = 1)
 if (generate_pdf) dev.off()
 
 # Plot 7: Mean over last 100 frames
-if (generate_pdf) pdf("plot-gmrf-7.pdf", height = 5, width = 5)
+if (generate_pdf) pdf("plots/plot-gmrf-7.pdf", height = 5, width = 5)
 Xmean <- apply(Xsim[,,(T - 100):T], MARGIN = c(1,2), FUN = mean)
-image(Xmean)
+image(Xmean, las = 1)
 if (generate_pdf) dev.off()
 
 # Plot 8: Standard deviation over last 100 frames
-if (generate_pdf) pdf("plot-gmrf-8.pdf", height = 5, width = 5)
+if (generate_pdf) pdf("plots/plot-gmrf-8.pdf", height = 5, width = 5)
 Xvar <- apply(Xsim[,,(T - 100):T], MARGIN = c(1,2), FUN = var)
-image(sqrt(Xvar), zlim = c(0, max(sqrt(Xvar))))
+image(sqrt(Xvar), zlim = c(0, max(sqrt(Xvar))), las = 1)
 if (generate_pdf) dev.off()

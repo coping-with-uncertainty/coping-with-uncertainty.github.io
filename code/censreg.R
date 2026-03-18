@@ -7,7 +7,7 @@
 library(censReg)
 
 # Flag to control PDF generation
-generate_pdf <- FALSE  # Set to TRUE to generate PDF files
+generate_pdf <- TRUE  # Set to TRUE to generate PDF files
 
 # Set parameters and seed
 n <- 100  # Number of observations
@@ -20,11 +20,11 @@ yc[y <= 0.5] <- 0.5  # Apply left censoring at 0.5
 logyc <- log(yc)  # Log-transformed censored data
 
 # Plot the censored data
-if (generate_pdf) pdf("plot-cens.pdf", width = 5, height = 5)
-plot(yc, ylim = c(0, 4), ylab = "y", xlab = "Observation")
+if (generate_pdf) pdf("plots/plot-cens.pdf", width = 5, height = 5)
+plot(yc, ylim = c(0, 4), ylab = "y", xlab = "Observation", las = 1, bty = "l")
 abline(h = 0.5, lty = 2)  # Horizontal line indicating censoring threshold
-points((1:n)[y > 0.5], y[y > 0.5])  # Points for uncensored observations
-points((1:n)[y <= 0.5], y[y <= 0.5], col = "grey")  # Points for censored observations
+points((1:n)[y > 0.5], y[y > 0.5], las = 1, bty = "l")  # Points for uncensored observations
+points((1:n)[y <= 0.5], y[y <= 0.5], col = "grey", las = 1, bty = "l")  # Points for censored observations
 if (generate_pdf) dev.off()
 
 # Summary statistics for log-transformed data

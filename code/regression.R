@@ -6,10 +6,10 @@
 library(ggplot2)
 
 # Flag to control PDF and image generation
-generate_pdf <- FALSE  # Set to TRUE to save plots
+generate_pdf <- TRUE  # Set to TRUE to save plots
 
 # Read dataset
-students <- read.table("data/students.txt", header = TRUE)
+students <- read.table("../data/students.txt", header = TRUE)
 
 # Regression Model 1: Weight ~ Height
 mod1 <- lm(data = students, weight ~ height)
@@ -29,7 +29,7 @@ plot_regression <- ggplot(students, aes(height, weight)) +
 
 # Save plot if enabled
 if (generate_pdf) {
-  ggsave("regression_plot.png", plot = plot_regression, width = 8, height = 8)
+  ggsave("plots/regression_plot.png", plot = plot_regression, width = 8, height = 8)
 }
 
 # Print summaries
