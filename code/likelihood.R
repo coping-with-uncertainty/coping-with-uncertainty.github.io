@@ -57,13 +57,17 @@ data_list <- list(
 error_list <- lapply(data_list, function(x) abs(x - 0.3))
 
 pdf("plots/consist.pdf", width = 5, height = 5)
-par(mar = c(5, 5, 2, 2) + 0.1)
+par(mar = c(5, 5, 2, 2)) 
 
-boxplot(error_list,
+boxplot(error_list, 
+        axes = FALSE,      # Suppress default axes and box
         xlab = "Sample Size (n)",
-        ylab = expression("|"*hat(theta) - theta[0]*"|"),
-        pch  = 20,las = 1, bty = "l")
-
+        ylab = expression(abs(hat(theta) - theta[0])),
+        pch = 20)
+sample_sizes <- c(5, 25, 50, 75, 100, 150)
+axis(1, at = 1:length(error_list), labels = sample_sizes)
+axis(2, las = 1)         
+box(bty = "l")
 dev.off()
 # Example 1: Log-likelihood for normal distribution
 set.seed(1)
@@ -72,8 +76,9 @@ mu <- seq(-3, 3, by = 0.01)  # Range of mean values
 
 
 if (generate_pdf) pdf("plots/logik.pdf", width = 5, height = 5)
+par(mar = c(5, 5, 4, 2) + 0.1, mgp = c(4, 1, 0))
 plot(mu, log.lik.norm(x, mu) - max(log.lik.norm(x, mu)), las = 1, bty = "l",
-     type = "l", lwd = 3, ylab = TeX(r'($\ell$)'), xlab = expression(mu), 
+     type = "l", lwd = 3, ylab = expression("l("*mu*")"), xlab = expression(mu), 
      ylim = c(-25, 0))
 x <- rnorm(50)  # Medium sample size
 lines(mu, log.lik.norm(x, mu) - max(log.lik.norm(x, mu)), 
@@ -92,7 +97,7 @@ x <- rbinom(1, size = n, prob = p0)  # Simulated observation
 # Likelihood visualization with varying x
 if (generate_pdf) pdf("plots/plot.lik.4.pdf", height = 7, width = 7)
 plot(p, log.lik(p, x, n), xlab = expression(pi), type = "n", 
-     ylab = TeX(r'($\ell$)'), ylim = c(-40, 0), las = 1, bty = "l")
+     ylab = expression("l("*mu*")"), ylim = c(-40, 0), las = 1, bty = "l")
 
 PP <- c()
 for (i in 0:n) {
