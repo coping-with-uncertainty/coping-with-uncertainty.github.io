@@ -37,6 +37,8 @@ KL <- function(x) {
 
 # Generate plot comparing f1 and f2
 if (generate_pdf) {pdf("plots/plot.KL.1.pdf", height = 4, width = 8)}
+par(mar = c(5, 5, 4, 2) + 0.1, mgp = c(4, 1, 0))
+
 plot(x, f1(x), type = "l", lwd = 2, lty = 2, ylab = "density", xlab = "y", las = 1, bty = "l")
 lines(x, f2(x), lty = 1, lwd = 2, las = 1, bty = "l")
 legend(-4, 0.4, lty = c(1, 2), lwd = 2, c("f(y)", "g(y)"))
@@ -44,6 +46,8 @@ if (generate_pdf) {dev.off()}
 
 # Generate plot comparing F1 and F2
 if (generate_pdf) {pdf("plots/plot.KL.KS.pdf", height = 4, width = 8)}
+par(mar = c(5, 5, 4, 2) + 0.1, mgp = c(4, 1, 0))
+
 plot(x, F1(x), type = "l", lwd = 2, lty = 2, ylab = "density", xlab = "y", las = 1, bty = "l")
 lines(x, F2(x), lty = 1, lwd = 2, las = 1, bty = "l")
 legend(-4, 0.4, lty = c(1, 2), lwd = 2, c("f(y)", "g(y)"))
@@ -51,20 +55,25 @@ if (generate_pdf) {dev.off()}
 
 # Generate plot for log(f2(x)/f1(x))
 if (generate_pdf) {pdf("plots/plot.KL.2.pdf", height = 4, width = 8)}
+par(mar = c(5, 5, 4, 2) + 0.1, mgp = c(4, 1, 0))
+
 plot(x, log(f2(x) / f1(x)), ylab = "log(g(y)/f(y))", xlab = "y", type = "l", lwd = 2, las = 1, bty = "l")
 if (generate_pdf) {dev.off()}
 
 # Generate plot for log(f2(x)/f1(x)) * f2(x)
 if (generate_pdf) {pdf("plots/plot.KL.3.pdf", height = 4, width = 8)}
+par(mar = c(5, 5, 4, 2) + 0.1, mgp = c(4, 1, 0))
+
+
 plot(x, log(f2(x) / f1(x)) * f2(x), ylab = "log(g(y)/f(y))*g(y)", xlab = "y", type = "l", lwd = 2, las = 1, bty = "l")
 if (generate_pdf) {dev.off()}
 
 # Generate plot from above with a shaded area between the curve and the x-axis
 if (generate_pdf) {pdf("plots/plot.KL.4.pdf", height = 4, width = 8)}
 par(mar = c(5, 5, 4, 2) + 0.1, mgp = c(4, 1, 0))
+
 curve(KL, from = min(x), to = max(x), ylab = "log(g(y)/f(y))*g(y)", xlab = "y", type = "l", lwd = 2, las = 1, bty = "l")
 x1 <- c(x, min(x))
 polygon(x1, y = KL(x1), col = "grey")
-par(mgp = c(3, 1, 0), mar = c(5, 4, 4, 2) + 0.1)
 if (generate_pdf) {dev.off()}
 
