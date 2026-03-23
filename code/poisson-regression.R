@@ -9,7 +9,7 @@ library(mgcv)
 set.seed(99)
 
 # Flag to control image generation
-generate_pdf <- TRUE  # Set to TRUE to save the plot
+generate_pdf <- FALSE  # Set to TRUE to save the plot
 
 # Number of observations
 n_obs <- 200
@@ -35,7 +35,7 @@ poisson_plot <- ggplot(data = new_data, aes(x = purchases)) +
 
 # Save plot if enabled
 if (generate_pdf) {
-  ggsave("plots/poisson_plot.png", plot = poisson_plot, width = 8, height = 8)
+  ggsave("poisson_plot.png", plot = poisson_plot, width = 8, height = 8)
 }
 
 # Display the plot

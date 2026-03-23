@@ -2,7 +2,7 @@
 # Description: This script implements Gibbs sampling for a bivariate normal distribution.
 
 # Flag to control PDF generation
-generate_pdf <- TRUE  # Set to TRUE to save plots
+generate_pdf <- FALSE  # Set to TRUE to save plots
 
 # Function to perform Gibbs sampling
 gibbs_sampler <- function(n_iter, init_y, custom_sd = FALSE) {
@@ -34,16 +34,16 @@ Y1 <- gibbs_sampler(10000, c(0, 0))
 Y2 <- gibbs_sampler(10000, c(-50, -50))
 
 # Plot 1: First Gibbs sampling run
-if (generate_pdf) pdf("plots/Gibbs-Normal.pdf", width = 8, height = 4)
+if (generate_pdf) pdf("Gibbs-Normal.pdf", width = 8, height = 4)
 par(mfrow = c(1, 2))
-plot(Y1, ylab = expression(Y[2]), xlab = expression(Y[1]), las = 1, bty = "l")
-plot(Y2, ylab = expression(Y[2]), xlab = expression(Y[1]), las = 1, bty = "l")
+plot(Y1, ylab = expression(Y[2]), xlab = expression(Y[1]))
+plot(Y2, ylab = expression(Y[2]), xlab = expression(Y[1]))
 if (generate_pdf) dev.off()
 
 # Third Gibbs sampling run with different variance in second variable
 Y3 <- gibbs_sampler(1000, c(0, 0), custom_sd = TRUE)
 
 # Plot 2: Gibbs sampling with different variance
-if (generate_pdf) pdf("plots/Gibbs-Normal-1.pdf", width = 4, height = 4)
-plot(Y3, ylab = expression(Y[2]), xlab = expression(Y[1]), las = 1, bty = "l")
+if (generate_pdf) pdf("Gibbs-Normal-1.pdf", width = 4, height = 4)
+plot(Y3, ylab = expression(Y[2]), xlab = expression(Y[1]))
 if (generate_pdf) dev.off()

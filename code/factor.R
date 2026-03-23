@@ -1,4 +1,4 @@
-data = read.csv("../data/btw2021kreis.csv", sep=";",skip=4)
+data = read.csv("btw2021kreis.csv", sep=";",skip=4)
 data = data[-1,]
 data = data[,c(1,7,8,9,10,11,12,13,14,15)]
 BL = unique(data[,1])

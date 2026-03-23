@@ -6,19 +6,18 @@ library(evir)
 library(evd)
 
 # Flag to control PDF generation
-generate_pdf <- TRUE  # Set to TRUE to save plots
-if (generate_pdf && !dir.exists("plots")) dir.create("plots")
+generate_pdf <- FALSE  # Set to TRUE to save plots
 
 # Load dataset
-data <- read.table("../data/temp.dat", header = TRUE)
+data <- read.table("data/temp.dat", header = TRUE)
 
 # Convert date column
 data$date <- strptime(data[,4], "%Y%m%d")
 
 # Plot 1: Daily maximum temperature over time
-if (generate_pdf) pdf("plots/plot.temp-1.pdf", width = 8, height = 4)
+if (generate_pdf) pdf("plot.temp-1.pdf", width = 8, height = 4)
 plot(data$date, data$Luft, type = "l", xlab = "Year", 
-     ylab = "Maximum Daily Temperature [Celsius]", las = 1, bty = "l", cex.lab = 1, cex.axis = 1, cex.main = 1)
+     ylab = "Maximum Daily Temperature [Celsius]")
 if (generate_pdf) dev.off()
 
 # Extract unique years
@@ -34,15 +33,15 @@ for (i in 1:length(YEAR)) {
 }
 
 # Plot 2: Yearly maximum temperature
-if (generate_pdf) pdf("plots/plot.temp-2.pdf", width = 8, height = 4)
+if (generate_pdf) pdf("plot.temp-2.pdf", width = 8, height = 4)
 plot(DATA$year, DATA$max.temp, xlab = "Year", 
-     ylab = "Yearly Maximum Temperature [Celsius]", las = 1, bty = "l", cex.lab = 1, cex.axis = 1, cex.main = 1)
+     ylab = "Yearly Maximum Temperature [Celsius]")
 if (generate_pdf) dev.off()
 
 # Plot 3: Yearly lowest daily max temperature
-if (generate_pdf) pdf("plots/plot.temp-3.pdf", width = 8, height = 4)
+if (generate_pdf) pdf("plot.temp-3.pdf", width = 8, height = 4)
 plot(DATA$year, DATA$min.temp, xlab = "Year", 
-     ylab = "Lowest Daily Max. Temp. [Celsius]", las = 1, bty = "l", cex.lab = 1, cex.axis = 1, cex.main = 1)
+     ylab = "Lowest Daily Max. Temp. [Celsius]")
 abline(h = 0, col = "red")
 if (generate_pdf) dev.off()
 
@@ -51,12 +50,12 @@ mod <- gev(DATA$max.temp)
 par <- mod$par.ests
 
 # Plot 4: Empirical CDF with GEV fit for max temperature
-if (generate_pdf) pdf("plots/plot.extreme-2.pdf", height = 4, width = 5)
+if (generate_pdf) pdf("plot.extreme-2.pdf", height = 4, width = 5)
 plot(ecdf(DATA$max.temp), ylab = expression("H(y) and" ~ F[n] ~ "(y)"), 
-     main = "", xlab = "Maximum Temperature [Celsius]", las = 1, bty = "l", cex.lab = 1, cex.axis = 1, cex.main = 1)
+     main = "", xlab = "Maximum Temperature [Celsius]")
 xx <- seq(min(DATA$max.temp), max(DATA$max.temp), by = 0.01)
 lines(xx, pgev(xx, loc = par[3], scale = par[2], shape = par[1]), 
-      lwd = 3, col = "blue", las = 1, bty = "l")
+      lwd = 3, col = "blue")
 if (generate_pdf) dev.off()
 
 # Fit GEV model for min temperature
@@ -64,12 +63,12 @@ mod <- gev(DATA$min.temp)
 par <- mod$par.ests
 
 # Plot 5: Empirical CDF with GEV fit for min temperature
-if (generate_pdf) pdf("plots/plot.extreme-3.pdf", height = 4, width = 5)
+if (generate_pdf) pdf("plot.extreme-3.pdf", height = 4, width = 5)
 plot(ecdf(DATA$min.temp), ylab = expression("H(y) and" ~ F[n] ~ "(y)"), 
-     main = "", xlab = "Lowest Daily Max. Temp. [Celsius]", las = 1, bty = "l", cex.lab = 1, cex.axis = 1, cex.main = 1)
+     main = "", xlab = "Lowest Daily Max. Temp. [Celsius]")
 xx <- seq(min(DATA$min.temp), max(DATA$min.temp), by = 0.01)
 lines(xx, pgev(xx, loc = par[3], scale = par[2], shape = par[1]), 
-      lwd = 3, col = "blue", las = 1, bty = "l")
+      lwd = 3, col = "blue")
 if (generate_pdf) dev.off()
 
 # Split data before and after 1985
@@ -81,19 +80,19 @@ mod1 <- gev(DATA1$max.temp)
 mod2 <- gev(DATA2$max.temp)
 
 # Plot 6: Comparison of max temperature distributions before and after 1985
-if (generate_pdf) pdf("plots/plot.extreme-4.pdf", height = 4, width = 5)
+if (generate_pdf) pdf("plot.extreme-4.pdf", height = 4, width = 5)
 plot(ecdf(DATA1$max.temp), ylab = expression("H(y) and" ~ F[n] ~ "(y)"), 
-     main = "", xlab = "Maximum Temperature [Celsius]", col = "blue", las = 1, bty = "l", cex.lab = 1, cex.axis = 1, cex.main = 1)
-lines(ecdf(DATA2$max.temp), col = "red", las = 1, bty = "l")
+     main = "", xlab = "Maximum Temperature [Celsius]", col = "blue")
+lines(ecdf(DATA2$max.temp), col = "red")
 
 xx <- seq(min(DATA$max.temp), max(DATA$max.temp), by = 0.01)
 par1 <- mod1$par.ests
 par2 <- mod2$par.ests
 
 lines(xx, pgev(xx, loc = par1[3], scale = par1[2], shape = par1[1]), 
-      lwd = 3, col = "blue", las = 1, bty = "l")
+      lwd = 3, col = "blue")
 lines(xx, pgev(xx, loc = par2[3], scale = par2[2], shape = par2[1]), 
-      lwd = 3, col = "red", las = 1, bty = "l")
+      lwd = 3, col = "red")
 
 text(22, 0.6, "Before 1985", col = "blue")
 text(26, 0.2, "After 1985", col = "red")
@@ -106,9 +105,9 @@ for (i in 1:8) {
 }
 
 # Plot 7: Simulated extreme values for increasing sample size
-if (generate_pdf) pdf("plots/plot.extreme-1.pdf", height = 4, width = 5)
+if (generate_pdf) pdf("plot.extreme-1.pdf", height = 4, width = 5)
 plot(0:8, Y, xlab = expression("Sample size n [" ~ 10^k ~ "]"), 
-     ylab = expression(Y["max"]), las = 1, bty = "l", cex.lab = 1, cex.axis = 1, cex.main = 1)
+     ylab = expression(Y["max"]))
 if (generate_pdf) dev.off()
 
 # Extreme values in sprint performance
@@ -124,9 +123,9 @@ n <- length(Jahresbestleistung)
 model <- fgev(Jahresbestleistung)
 
 # Plot 8: Extreme value modeling for sprint performance
-if (generate_pdf) pdf("plots/plot.extreme-5.pdf", height = 4, width = 5)
+if (generate_pdf) pdf("plot.extreme-5.pdf", height = 4, width = 5)
 plot(1:n/n, pgev(sort(Jahresbestleistung), loc = model$par[1], 
-                 scale = model$par[2], shape = model$par[3]), las = 1, bty = "l", cex.lab = 1, cex.axis = 1, cex.main = 1, xlab = "Quantile", ylab = "Probability")
+                 scale = model$par[2], shape = model$par[3]))
 abline(0, 1)
 if (generate_pdf) dev.off()
 

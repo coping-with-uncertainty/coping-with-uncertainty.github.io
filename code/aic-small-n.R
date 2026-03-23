@@ -28,7 +28,7 @@ models <- matrix(0, Kmax, K)
 models[1, ] <- 0
 
 # Flag to control PDF generation
-generate_pdf <- TRUE  # Set to TRUE to save plots
+generate_pdf <- FALSE  # Set to TRUE to save plots
 
 # Forward selection using AIC
 for (k in 2:Kmax) {
@@ -52,21 +52,21 @@ for (k in 2:Kmax) {
 
 # Function to generate AIC plots
 plot_aic <- function(filename, ylab_text) {
-  if (generate_pdf) pdf(paste0("plots/", filename), width = 5, height = 5)
+  if (generate_pdf) pdf(filename, width = 5, height = 5)
   plot((0:(length(aic) - 1)), log(aic - min(aic) + 0.01),
        xlab = "dimension of model", ylab = ylab_text,
-       type = "l", lwd = 3, las = 1, bty = "l")
+       type = "l", lwd = 3)
   abline(v = 50)
   if (generate_pdf) dev.off()
 }
 
 # Function to plot estimated parameters
 plot_estimates <- function(filename) {
-  if (generate_pdf) pdf(paste0("plots/", filename), width = 5, height = 3)
-  plot(theta, xlab = "index of parameter", las = 1, bty = "l")
+  if (generate_pdf) pdf(filename, width = 5, height = 3)
+  plot(theta, xlab = "index of parameter")
   index.best <- models[aic == min(aic), ]
   index.best <- (1:K)[index.best == 1]
-  points(index.best, theta[index.best], pch = 16, cex = 1.5, las = 1, bty = "l")
+  points(index.best, theta[index.best], pch = 16, cex = 1.5)
   if (generate_pdf) dev.off()
 }
 

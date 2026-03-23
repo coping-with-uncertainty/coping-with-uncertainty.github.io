@@ -6,7 +6,7 @@
 library(MCMCpack)
 
 # Flag to control PDF generation
-generate_pdf <- TRUE  # Set to TRUE to save plots
+generate_pdf <- FALSE  # Set to TRUE to save plots
 
 # Define prior distributions
 prior.mu <- function(mu) {
@@ -29,15 +29,15 @@ s2 <- seq(0.00001, 4, by = 0.01)
 N.s2 <- length(s2)
 
 # Plot 1: Prior distribution for mu
-if (generate_pdf) pdf("plots/plot.bayes.small.n-1.pdf", width = 4, height = 4)
+if (generate_pdf) pdf("plot.bayes.small.n-1.pdf", width = 4, height = 4)
 plot(mu, prior.mu(mu), type = "l", ylim = c(0, max(prior.mu(mu))), 
-     ylab = "Prior", xlab = expression(mu), las = 1, bty = "l")
+     ylab = "Prior", xlab = expression(mu))
 if (generate_pdf) dev.off()
 
 # Plot 2: Prior distribution for sigma^2
-if (generate_pdf) pdf("plots/plot.bayes.small.n-2.pdf", width = 4, height = 4)
+if (generate_pdf) pdf("plot.bayes.small.n-2.pdf", width = 4, height = 4)
 plot(s2, prior.s2(s2), type = "l", ylim = c(0, max(prior.s2(s2))), 
-     ylab = "Prior", xlab = expression(sigma^2), las = 1, bty = "l")
+     ylab = "Prior", xlab = expression(sigma^2))
 if (generate_pdf) dev.off()
 
 # Generate synthetic data
@@ -59,7 +59,7 @@ for (i1 in 1:N.mu) {
 
 # Function to generate density plots
 plot_density <- function(data, filename) {
-  if (generate_pdf) pdf(paste0("plots/", filename), width = 4, height = 4)
+  if (generate_pdf) pdf(filename, width = 4, height = 4)
   image(mu, s2, data, ylab = expression(sigma^2), xlab = expression(mu))
   if (generate_pdf) dev.off()
 }
@@ -90,16 +90,16 @@ z.l <- sapply(lambda, function(l) likel_pois(y, n, l))
 z.lp <- z.l * prior.lambda(lambda)
 
 # Plot 5: Prior for lambda
-if (generate_pdf) pdf("plots/plot.bayes.small.n-5.pdf", width = 4, height = 4)
-plot(lambda, prior.lambda(lambda), type = "l", xlab = expression(lambda), ylab = "Prior", las = 1, bty = "l")
+if (generate_pdf) pdf("plot.bayes.small.n-5.pdf", width = 4, height = 4)
+plot(lambda, prior.lambda(lambda), type = "l", xlab = expression(lambda), ylab = "Prior")
 if (generate_pdf) dev.off()
 
 # Plot 6: Poisson likelihood
-if (generate_pdf) pdf("plots/plot.bayes.small.n-6.pdf", width = 4, height = 4)
-plot(lambda, z.l, type = "l", xlab = expression(lambda), ylab = "Likelihood", las = 1, bty = "l")
+if (generate_pdf) pdf("plot.bayes.small.n-6.pdf", width = 4, height = 4)
+plot(lambda, z.l, type = "l", xlab = expression(lambda), ylab = "Likelihood")
 if (generate_pdf) dev.off()
 
 # Plot 7: Penalized likelihood (Posterior)
-if (generate_pdf) pdf("plots/plot.bayes.small.n-7.pdf", width = 4, height = 4)
-plot(lambda, z.lp, type = "l", xlab = expression(lambda), ylab = "Penalized Likelihood", las = 1, bty = "l")
+if (generate_pdf) pdf("plot.bayes.small.n-7.pdf", width = 4, height = 4)
+plot(lambda, z.lp, type = "l", xlab = expression(lambda), ylab = "Penalized Likelihood")
 if (generate_pdf) dev.off()

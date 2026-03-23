@@ -3,7 +3,7 @@
 # Optionally, the plots can be saved as PDF files.
 
 # Flag to control PDF generation
-generate_pdf <- TRUE  # Set to TRUE to generate PDF files
+generate_pdf <- FALSE  # Set to TRUE to generate PDF files
 
 # Mendel's experimental data
 mendel <- c(315, 101, 108, 32)
@@ -26,16 +26,16 @@ Chi <- sum((obser - expec)^2 / expec)
 
 # First plot: Chi-squared density plot
 x <- seq(0, 10, by = 0.01)
-if (generate_pdf) pdf("plots/plot-mendel-sri-1.pdf", width = 6, height = 4)
+if (generate_pdf) pdf("plot-mendel-sri-1.pdf", width = 6, height = 4)
 plot(x, dchisq(x, df = 3), type = "l", lwd = 3,
-     ylab = "density", xlab = expression(paste(Chi, "-", "squared")), las = 1, bty = "l")
+     ylab = "density", xlab = "Chi-squared")
 abline(v = Chi, col = "darkgreen", lwd = 3)
 if (generate_pdf) dev.off()
 
 # Second plot: Chi-squared cumulative distribution function (CDF)
-if (generate_pdf) pdf("plots/plot-mendel-sri-2.pdf", width = 6, height = 4)
+if (generate_pdf) pdf("plot-mendel-sri-2.pdf", width = 6, height = 4)
 plot(x, pchisq(x, df = 3), type = "l", lwd = 3,
-     ylab = "density", xlab = expression(paste(Chi, "-", "squared")), las = 1, bty = "l")
+     ylab = "density", xlab = "Chi-squared")
 abline(v = Chi, col = "darkgreen", lwd = 3)
 if (generate_pdf) dev.off()
 

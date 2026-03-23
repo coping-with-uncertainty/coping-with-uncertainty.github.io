@@ -58,12 +58,12 @@ for (i in 1:B) {
 }
 
 # Flag to control PDF generation
-generate_pdf <- TRUE  # Set to TRUE to save the plot
+generate_pdf <- FALSE  # Set to TRUE to save the plot
 
 # Plot bootstrapped accuracy differences
-if (generate_pdf) pdf("plots/plot.boot.class.pdf", width = 6, height = 4)
+if (generate_pdf) pdf("plot.boot.class.pdf", width = 6, height = 4)
 plot(ecdf(delta.acc), main = "Bootstrapped values",
      xlab = expression(D^"*"), ylab = expression(F[n]~"( )"),
-     verticals = TRUE, do.points = FALSE, lwd = 3, las = 1, bty = "l")
+     verticals = TRUE, do.points = FALSE, lwd = 3)
 abline(v = delta, col = "darkblue", lwd = 3)
 if (generate_pdf) dev.off()
