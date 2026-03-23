@@ -70,7 +70,7 @@ for( i in 1:10000)
   beta1s = rnorm(1, sd=3)
   ys = rnorm( n, mean= beta0s + x * beta1s, sd=sigs)
   mods = fitted(lm(ys ~ x))
-  d = abs( mean( (y - mods)^2))
+  d = abs( mean( (y[1:n] - mods)^2))
   if (d < 2)
 
   {
@@ -81,4 +81,4 @@ for( i in 1:10000)
 }
 
 plot(x,YS[7,])   
-points(x,y,col=2)
+points(x,y[1:n],col=2)

@@ -14,17 +14,18 @@ data$new.contract[data$NeuerVertrag==0 ] = "no"
 data$district = data$SBez
 
 tab = table(data$floor.space, data$center, data$new.contract , data$district)
-dat = as.data.frame(tab)
-colnames(dat) = c("floor.space","center","new.contract","district","Freq" )
+dat_df = as.data.frame(tab)
+colnames(dat_df) = c("floor.space","center","new.contract","district","Freq" )
 
-n = sum(dat$Freq)
+n = sum(dat_df$Freq)
 ind2 = loglm(Freq ~ floor.space + center + new.contract + district, 
-             data=dat)
+             data=dat_df)
 
 full =  loglm(Freq ~ floor.space* center * new.contract * district, 
-              data=dat)
+              data=dat_df)
 mod = step(ind2, scope=list(lower=formula(ind2),upper=formula(full)),
            direction="forward", k = log(n))
+
 summary(mod)
 
 # loglm(~)
